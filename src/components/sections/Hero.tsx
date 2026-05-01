@@ -93,7 +93,7 @@ export default function Hero() {
             View My Work
           </a>
           <a
-            href="https://github.com"
+            href="https://github.com/patient-Zero-0"
             target="_blank"
             rel="noopener noreferrer"
             className="px-6 py-2.5 border border-white/15 text-white/60 text-xs font-mono rounded-full
