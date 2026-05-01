@@ -136,6 +136,7 @@ export function FullPageDots({ labels }: { labels?: string[] }) {
         <button
           key={i}
           title={labels?.[i]}
+          aria-label={labels?.[i] ?? `Go to section ${i + 1}`}
           onClick={() => goTo(i)}
           style={{
             width:        i === current ? 6 : 4,

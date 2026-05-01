@@ -23,10 +23,14 @@ export default function Contact() {
     transition: `opacity 0.6s ease ${delay}s, transform 0.6s ease ${delay}s`,
   });
 
-  const copyEmail = () => {
-    navigator.clipboard.writeText('1701734251@qq.com');
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2400);
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText('1701734251@qq.com');
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2400);
+    } catch {
+      // clipboard unavailable — silently ignore
+    }
   };
 
   return (

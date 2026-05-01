@@ -3,10 +3,12 @@
 import dynamic from 'next/dynamic';
 import Grid from '@/components/ui/Grid';
 import BlurText from '@/components/ui/BlurText';
+import { useFullPage } from '@/components/layout/FullPage';
 
 const HeroObject = dynamic(() => import('@/components/ui/HeroObject'), { ssr: false });
 
 export default function Hero() {
+  const { goTo } = useFullPage();
   return (
     <section className="relative h-screen overflow-hidden bg-[#080808]">
 
@@ -64,6 +66,7 @@ export default function Hero() {
 
         {/* Main title */}
         <BlurText
+          as="h1"
           text="I build things that live on the internet."
           delay={100}
           animateBy="words"
@@ -85,13 +88,13 @@ export default function Hero() {
           className="flex items-center gap-4 pointer-events-auto"
           style={{ opacity: 0, animation: 'fadeUp 0.5s ease 1.5s forwards' }}
         >
-          <a
-            href="#projects"
+          <button
+            onClick={() => goTo(2)}
             className="px-6 py-2.5 bg-white text-black text-xs font-bold rounded-full
                        hover:bg-white/90 transition-all duration-200 hover:scale-105 active:scale-95 tracking-wide uppercase"
           >
             View My Work
-          </a>
+          </button>
           <a
             href="https://github.com/patient-Zero-0"
             target="_blank"

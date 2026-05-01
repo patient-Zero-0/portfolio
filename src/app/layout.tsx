@@ -31,6 +31,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'AccEEden', url: 'https://github.com/patient-Zero-0' }],
   creator: 'AccEEden',
+  alternates: {
+    canonical: SITE_URL,
+  },
   openGraph: {
     type:        'website',
     url:          SITE_URL,
@@ -38,13 +41,20 @@ export const metadata: Metadata = {
     title:       'AccEEden — Python Developer & AI Engineer',
     description:
       'Data engineering · Web scraping · LLM / AI applications · Open to internships.',
-    locale: 'en_US',
+    locale:      'en_US',
+    images: [{
+      url:    `${SITE_URL}/opengraph-image`,
+      width:   1200,
+      height:  630,
+      alt:    'AccEEden — Python Developer & AI Engineer',
+    }],
   },
   twitter: {
     card:        'summary_large_image',
     title:       'AccEEden — Python Developer & AI Engineer',
     description: 'Data engineering · Web scraping · LLM / AI applications · Open to internships.',
     creator:     '@AccEEden',
+    images:     [`${SITE_URL}/opengraph-image`],
   },
   robots: {
     index:  true,

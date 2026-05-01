@@ -89,3 +89,13 @@ a, button, [role="button"] {
   backdrop-filter: blur(28px);
   -webkit-backdrop-filter: blur(28px);
 }
+
+/* ── respect OS reduced-motion preference ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .skill-card-outer { animation: none; }
+}

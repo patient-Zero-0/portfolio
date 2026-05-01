@@ -2,15 +2,22 @@
 
 import { useEffect, useRef, useState } from 'react';
 
+type ProjectStatus = 'completed' | 'live' | 'wip';
+interface Project {
+  id: string; name: string; nameZh: string; role: string; date: string;
+  status: ProjectStatus; github?: string; desc: string;
+  metrics: readonly string[]; stack: readonly string[];
+}
+
 /* ── project data (cleaned & improved from resume) ──────────────────── */
-const PROJECTS = [
+const PROJECTS: Project[] = [
   {
     id:      '01',
     name:    'Anjuke Rental Scraper',
     nameZh:  '安居客北京租房数据采集',
     role:    'Data Engineering',
     date:    '2025.11',
-    status:  'completed' as const,
+    status:  'completed',
     github:  'https://github.com/patient-Zero-0/Crawler-item-storage',
     desc:    'Scrapes Beijing rental listings from Anjuke (bj.zu.anjuke.com), extracting 10 structured fields per property — price, floor, house type, area, community, district, subway tags and more. Implements anti-detection via real Chrome headers and cookies; code deliberately demonstrates three parsing strategies (regex, XPath, CSS selectors) for comparison, with Parsel CSS selectors as the production path.',
     metrics: ['100 + verified listings', '10 fields per record', 'CSV + MySQL dual output', 'Regex data normalisation'],
@@ -22,7 +29,7 @@ const PROJECTS = [
     nameZh:  '虎扑体育数据分析平台',
     role:    'Data Engineering & Visualisation',
     date:    '2025.12',
-    status:  'completed' as const,
+    status:  'completed',
     github:  'https://github.com/patient-Zero-0/Crawler-item-storage',
     desc:    'End-to-end data system targeting Hupu — one of China\'s largest sports communities. Scrapes news and match records, cleans them through a Pandas pipeline, and renders interactive trend charts via Matplotlib.',
     metrics: ['2,000+ records scraped', 'Bypass dynamic anti-scraping', 'Multi-chart dashboard', 'Pandas ETL pipeline'],
@@ -34,7 +41,7 @@ const PROJECTS = [
     nameZh:  '个人作品集网站',
     role:    'Full-Stack & Creative Dev',
     date:    '2026.05',
-    status:  'live' as const,
+    status:  'live',
     github:  'https://github.com/patient-Zero-0/portfolio',
     desc:    'Built from scratch with Next.js + raw GLSL. Features a custom Navier-Stokes fluid cursor, iridescent WebGL glow shader, water-ripple ring simulation, Three.js iridescent prism, and fullpage section transitions.',
     metrics: ['Raw GLSL shaders', 'Navier-Stokes fluid', 'Spring-physics cursor', 'Fullpage transitions'],
@@ -46,12 +53,12 @@ const PROJECTS = [
     nameZh:  'AI 大模型应用',
     role:    'AI Engineering',
     date:    '2026 — In progress',
-    status:  'wip' as const,
+    status:  'wip',
     desc:    'Exploring RAG architectures, function-calling patterns, and autonomous agent loops. Building a personal AI assistant with persistent memory and tool use, grounded in the math of transformer attention.',
     metrics: ['RAG pipeline', 'Function calling', 'Agent loops', 'Vector retrieval'],
     stack:   ['Python', 'Flask', 'LLM APIs', 'Vector DB'],
   },
-] as const;
+];
 
 const STATUS_STYLE = {
   completed: { label: 'COMPLETED', color: 'text-sky-400/80',     border: 'border-sky-400/20' },
