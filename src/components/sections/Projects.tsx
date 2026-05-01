@@ -11,6 +11,7 @@ const PROJECTS = [
     role:    'Data Engineering',
     date:    '2025.11',
     status:  'completed' as const,
+    github:  'https://github.com/patient-Zero-0/Crawler-item-storage',
     desc:    'Scrapes Beijing rental listings from Anjuke (bj.zu.anjuke.com), extracting 10 structured fields per property — price, floor, house type, area, community, district, subway tags and more. Implements anti-detection via real Chrome headers and cookies; code deliberately demonstrates three parsing strategies (regex, XPath, CSS selectors) for comparison, with Parsel CSS selectors as the production path.',
     metrics: ['100 + verified listings', '10 fields per record', 'CSV + MySQL dual output', 'Regex data normalisation'],
     stack:   ['Python', 'Requests', 'Parsel', 'lxml', 'PyMySQL', 'CSV'],
@@ -22,6 +23,7 @@ const PROJECTS = [
     role:    'Data Engineering & Visualisation',
     date:    '2025.12',
     status:  'completed' as const,
+    github:  'https://github.com/patient-Zero-0/Crawler-item-storage',
     desc:    'End-to-end data system targeting Hupu — one of China\'s largest sports communities. Scrapes news and match records, cleans them through a Pandas pipeline, and renders interactive trend charts via Matplotlib.',
     metrics: ['2,000+ records scraped', 'Bypass dynamic anti-scraping', 'Multi-chart dashboard', 'Pandas ETL pipeline'],
     stack:   ['Python', 'Scrapy', 'Pandas', 'Matplotlib', 'MySQL'],
@@ -33,6 +35,7 @@ const PROJECTS = [
     role:    'Full-Stack & Creative Dev',
     date:    '2026.05',
     status:  'live' as const,
+    github:  'https://github.com/patient-Zero-0/portfolio',
     desc:    'Built from scratch with Next.js + raw GLSL. Features a custom Navier-Stokes fluid cursor, iridescent WebGL glow shader, water-ripple ring simulation, Three.js iridescent prism, and fullpage section transitions.',
     metrics: ['Raw GLSL shaders', 'Navier-Stokes fluid', 'Spring-physics cursor', 'Fullpage transitions'],
     stack:   ['Next.js', 'TypeScript', 'Three.js', 'WebGL / GLSL', 'Tailwind'],
@@ -144,8 +147,8 @@ export default function Projects() {
                   ))}
                 </div>
 
-                {/* stack tags */}
-                <div className="flex flex-wrap gap-1.5 pt-4 border-t border-white/[0.06]">
+                {/* stack tags + github link */}
+                <div className="flex flex-wrap items-center gap-1.5 pt-4 border-t border-white/[0.06]">
                   {p.stack.map((t) => (
                     <span
                       key={t}
@@ -155,6 +158,22 @@ export default function Projects() {
                       {t}
                     </span>
                   ))}
+                  {p.github && (
+                    <a
+                      href={p.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="ml-auto shrink-0 flex items-center gap-1 font-mono text-[10px]
+                                 text-white/30 hover:text-white/70 transition-colors duration-200
+                                 pointer-events-auto"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+                      </svg>
+                      GitHub ↗
+                    </a>
+                  )}
                 </div>
 
                 {/* role badge bottom-right */}
