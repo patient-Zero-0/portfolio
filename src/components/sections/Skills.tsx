@@ -295,19 +295,13 @@ export default function Skills() {
         <div className="flex justify-between pt-3">
           <button
             onClick={() => goTo(current - 1)}
-            className={`font-mono text-[10px] tracking-[0.2em] transition-all duration-300
-              ${current === 0
-                ? 'text-white/10 pointer-events-none'
-                : 'text-white/28 hover:text-white/55'}`}
+            className={`font-mono text-[10px] tracking-[0.2em] transition-all duration-300 ${current === 0 ? 'text-white/10 pointer-events-none' : 'text-white/28 hover:text-white/55'}`}
           >
             ← PREV
           </button>
           <button
             onClick={() => goTo(current + 1)}
-            className={`font-mono text-[10px] tracking-[0.2em] transition-all duration-300
-              ${current === SKILLS.length - 1
-                ? 'text-white/10 pointer-events-none'
-                : 'text-white/28 hover:text-white/55'}`}
+            className={`font-mono text-[10px] tracking-[0.2em] transition-all duration-300 ${current === SKILLS.length - 1 ? 'text-white/10 pointer-events-none' : 'text-white/28 hover:text-white/55'}`}
           >
             NEXT →
           </button>

@@ -71,8 +71,8 @@ const TIMELINE = [
   {
     id:       '01',
     date:     '2025.09',
-    title:    'Jiaying University',
-    subtitle: 'Math & Applied Mathematics — B.Sc.',
+    title:    'Math & Applied Mathematics',
+    subtitle: 'B.Sc. — 2025 — Present',
     desc:     'Enrolled as a first-year undergraduate. Calculus, linear algebra, probability & statistics, mathematical modelling — the analytical rigor that now underpins every engineering decision I make.',
     tags:     ['B.Sc.', 'Mathematics', '2025 — Present'],
     status:   'education' as StatusKey,
@@ -167,9 +167,7 @@ export default function Experience() {
                   </span>
 
                   <div
-                    className="border border-white/[0.07] rounded-xl p-5
-                               bg-white/[0.02] hover:bg-white/[0.035]
-                               hover:border-white/[0.13] transition-all duration-300"
+                    className="border border-white/[0.07] rounded-xl p-5 bg-white/[0.02] hover:bg-white/[0.035] hover:border-white/[0.13] transition-all duration-300"
                   >
                     {/* row: title + badge */}
                     <div className="flex items-start justify-between gap-3 mb-2.5">
@@ -182,8 +180,7 @@ export default function Experience() {
                         </p>
                       </div>
                       <span
-                        className={`font-mono text-[9px] tracking-wider border rounded-full
-                                    px-2 py-0.5 shrink-0 ${st.color} ${st.border}`}
+                        className={`font-mono text-[9px] tracking-wider border rounded-full px-2 py-0.5 shrink-0 ${st.color} ${st.border}`}
                       >
                         {st.label}
                       </span>
@@ -199,8 +196,7 @@ export default function Experience() {
                       {item.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="font-mono text-[9px] text-white/26 bg-white/[0.04]
-                                     border border-white/[0.06] px-2 py-0.5 rounded"
+                          className="font-mono text-[9px] text-white/26 bg-white/[0.04] border border-white/[0.06] px-2 py-0.5 rounded"
                         >
                           {tag}
                         </span>

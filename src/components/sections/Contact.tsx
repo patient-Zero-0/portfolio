@@ -1,12 +1,13 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import type { CSSProperties } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
+import { CONTACT_EMAIL, CONTACT_QQ, GITHUB_HANDLE, GITHUB_URL } from '@/lib/contact';
 
 export default function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [fired,  setFired]  = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [fired, setFired] = useState(false);
+  const { copied, copy: copyEmail } = useCopyToClipboard(CONTACT_EMAIL);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -22,16 +23,6 @@ export default function Contact() {
     transform:  fired ? 'none' : 'translateY(20px)',
     transition: `opacity 0.6s ease ${delay}s, transform 0.6s ease ${delay}s`,
   });
-
-  const copyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText('1701734251@qq.com');
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2400);
-    } catch {
-      // clipboard unavailable — silently ignore
-    }
-  };
 
   return (
     <section
@@ -56,7 +47,6 @@ export default function Contact() {
             <span className="text-white/28">something.</span>
           </h2>
 
-          {/* live status dot */}
           <div className="flex items-center gap-2 mt-5">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
@@ -76,37 +66,27 @@ export default function Contact() {
 
           {/* email — primary */}
           <div
-            className="lg:col-span-3 border border-white/[0.08] rounded-2xl p-7
-                       bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.16]
-                       transition-all duration-300 flex flex-col gap-5"
+            className="lg:col-span-3 border border-white/[0.08] rounded-2xl p-7 bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.16] transition-all duration-300 flex flex-col gap-5"
           >
             <span className="font-mono text-[10px] text-white/22 tracking-[0.25em]">
               PRIMARY CONTACT
             </span>
             <a
-              href="mailto:1701734251@qq.com"
-              className="text-xl md:text-[22px] font-bold text-white/80 hover:text-white
-                         transition-colors duration-200 tracking-tight break-all leading-tight"
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="text-xl md:text-[22px] font-bold text-white/80 hover:text-white transition-colors duration-200 tracking-tight break-all leading-tight"
             >
-              1701734251@qq.com
+              {CONTACT_EMAIL}
             </a>
             <div className="flex flex-wrap gap-2.5 mt-auto">
               <a
-                href="mailto:1701734251@qq.com"
-                className="font-mono text-[10px] text-white/40 border border-white/[0.10]
-                           rounded-full px-4 py-1.5 hover:border-white/30 hover:text-white/70
-                           transition-all duration-200 tracking-wider"
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="font-mono text-[10px] text-white/40 border border-white/[0.10] rounded-full px-4 py-1.5 hover:border-white/30 hover:text-white/70 transition-all duration-200 tracking-wider"
               >
                 OPEN MAIL CLIENT
               </a>
               <button
                 onClick={copyEmail}
-                className={`font-mono text-[10px] border rounded-full px-4 py-1.5
-                            tracking-wider transition-all duration-300
-                            ${copied
-                              ? 'text-emerald-400/80 border-emerald-400/30 bg-emerald-400/[0.07]'
-                              : 'text-white/40 border-white/[0.10] hover:border-white/30 hover:text-white/70'
-                            }`}
+                className={`font-mono text-[10px] border rounded-full px-4 py-1.5 tracking-wider transition-all duration-300 ${copied ? 'text-emerald-400/80 border-emerald-400/30 bg-emerald-400/[0.07]' : 'text-white/40 border-white/[0.10] hover:border-white/30 hover:text-white/70'}`}
               >
                 {copied ? 'COPIED ✓' : 'COPY ADDRESS'}
               </button>
@@ -118,36 +98,30 @@ export default function Contact() {
 
             {/* GitHub */}
             <a
-              href="https://github.com/patient-Zero-0"
+              href={GITHUB_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between border border-white/[0.07] rounded-xl p-5
-                         bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.15]
-                         transition-all duration-300 group flex-1"
+              className="flex items-center justify-between border border-white/[0.07] rounded-xl p-5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.15] transition-all duration-300 group flex-1"
             >
               <div>
                 <span className="font-mono text-[10px] text-white/22 tracking-[0.2em]">GITHUB</span>
-                <p className="text-sm font-bold text-white/65 group-hover:text-white mt-1
-                              transition-colors duration-200 tracking-tight">
-                  patient-Zero-0
+                <p className="text-sm font-bold text-white/65 group-hover:text-white mt-1 transition-colors duration-200 tracking-tight">
+                  {GITHUB_HANDLE}
                 </p>
               </div>
-              <span className="font-mono text-white/15 group-hover:text-white/50 text-xl
-                               group-hover:translate-x-0.5 group-hover:-translate-y-0.5
-                               transition-all duration-200">
+              <span className="font-mono text-white/15 group-hover:text-white/50 text-xl group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200">
                 ↗
               </span>
             </a>
 
             {/* QQ */}
             <div
-              className="flex items-center justify-between border border-white/[0.07] rounded-xl p-5
-                         bg-white/[0.02] transition-all duration-300 flex-1"
+              className="flex items-center justify-between border border-white/[0.07] rounded-xl p-5 bg-white/[0.02] transition-all duration-300 flex-1"
             >
               <div>
                 <span className="font-mono text-[10px] text-white/22 tracking-[0.2em]">QQ</span>
                 <p className="text-sm font-bold text-white/45 mt-1 tracking-tight">
-                  2208629661
+                  {CONTACT_QQ}
                 </p>
               </div>
               <span className="font-mono text-[9px] text-white/12 tracking-widest">CN</span>
@@ -167,8 +141,7 @@ export default function Contact() {
           ].map((label) => (
             <span
               key={label}
-              className="font-mono text-[10px] text-white/28 border border-white/[0.07]
-                         rounded-full px-3 py-1 tracking-wider"
+              className="font-mono text-[10px] text-white/28 border border-white/[0.07] rounded-full px-3 py-1 tracking-wider"
             >
               {label}
             </span>
@@ -191,13 +164,12 @@ export default function Contact() {
           className="mt-auto pt-6 border-t border-white/[0.05]"
           style={fadeIn(0.28)}
         >
-          <div className="flex flex-col md:flex-row items-start md:items-center
-                          justify-between gap-2">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
             <span className="font-mono text-[10px] text-white/18 tracking-wider">
               © 2026 AccEEden · Built with Next.js &amp; Claude Code
             </span>
             <span className="font-mono text-[10px] text-white/10 tracking-wider">
-              MATH &amp; APPLIED MATHEMATICS · JIAYING UNIVERSITY
+              MATH &amp; APPLIED MATHEMATICS
             </span>
           </div>
         </div>

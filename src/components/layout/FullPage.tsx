@@ -1,7 +1,7 @@
 'use client';
 
 import {
-  createContext, useCallback, useContext,
+  Children, createContext, useCallback, useContext,
   useEffect, useRef, useState, type ReactNode,
 } from 'react';
 
@@ -49,8 +49,8 @@ export function FullPageProvider({
 
 /* ── slides ─────────────────────────────────────────────────────────── */
 export function FullPageSlides({ children }: { children: ReactNode }) {
-  const { current, goTo } = useFullPage();
-  const sections = (Array.isArray(children) ? children : [children]) as ReactNode[];
+  const { current, total, goTo } = useFullPage();
+  const sections = Children.toArray(children);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   /* wheel: navigate between sections, but only at scroll boundaries */
@@ -77,6 +77,56 @@ export function FullPageSlides({ children }: { children: ReactNode }) {
 
     window.addEventListener('wheel', onWheel, { passive: false });
     return () => window.removeEventListener('wheel', onWheel);
+  }, [current, goTo]);
+
+  /* keyboard: arrow up/down and PageUp/PageDown/Home/End */
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      switch (e.key) {
+        case 'ArrowDown': case 'PageDown': e.preventDefault(); goTo(current + 1); break;
+        case 'ArrowUp':   case 'PageUp':   e.preventDefault(); goTo(current - 1); break;
+        case 'Home': e.preventDefault(); goTo(0); break;
+        case 'End':  e.preventDefault(); goTo(total - 1); break;
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [current, total, goTo]);
+
+  /* touch: swipe up/down to navigate */
+  useEffect(() => {
+    let startY = 0;
+    let startTime = 0;
+
+    const onTouchStart = (e: TouchEvent) => {
+      startY = e.touches[0].clientY;
+      startTime = Date.now();
+    };
+
+    const onTouchEnd = (e: TouchEvent) => {
+      const dy      = startY - e.changedTouches[0].clientY;
+      const elapsed = Date.now() - startTime;
+      if (Math.abs(dy) < 40 || elapsed > 600) return;
+
+      const slide = slideRefs.current[current];
+      if (slide) {
+        const atBottom = slide.scrollTop + slide.clientHeight >= slide.scrollHeight - 4;
+        const atTop    = slide.scrollTop <= 0;
+        if (dy > 0 && !atBottom) return;
+        if (dy < 0 && !atTop)    return;
+      }
+
+      if (dy > 0) goTo(current + 1);
+      else        goTo(current - 1);
+    };
+
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchend',   onTouchEnd,   { passive: true });
+    return () => {
+      window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchend',   onTouchEnd);
+    };
   }, [current, goTo]);
 
   return (

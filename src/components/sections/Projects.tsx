@@ -9,7 +9,6 @@ interface Project {
   metrics: readonly string[]; stack: readonly string[];
 }
 
-/* ── project data (cleaned & improved from resume) ──────────────────── */
 const PROJECTS: Project[] = [
   {
     id:      '01',
@@ -61,12 +60,11 @@ const PROJECTS: Project[] = [
 ];
 
 const STATUS_STYLE = {
-  completed: { label: 'COMPLETED', color: 'text-sky-400/80',     border: 'border-sky-400/20' },
-  live:      { label: 'LIVE',      color: 'text-emerald-400/80', border: 'border-emerald-400/20' },
-  wip:       { label: 'IN PROGRESS', color: 'text-amber-400/70', border: 'border-amber-400/20' },
+  completed: { label: 'COMPLETED',   color: 'text-sky-400/80',     border: 'border-sky-400/20' },
+  live:      { label: 'LIVE',        color: 'text-emerald-400/80', border: 'border-emerald-400/20' },
+  wip:       { label: 'IN PROGRESS', color: 'text-amber-400/70',   border: 'border-amber-400/20' },
 };
 
-/* ── component ───────────────────────────────────────────────────────── */
 export default function Projects() {
   const secRef = useRef<HTMLElement>(null);
   const [fired, setFired] = useState(false);
@@ -88,29 +86,25 @@ export default function Projects() {
     >
       <div className="max-w-7xl mx-auto w-full px-6 md:px-12 flex flex-col flex-1 gap-10">
 
-        {/* ── header ── */}
+        {/* header */}
         <div className="flex items-center gap-4">
           <span className="font-mono text-xs text-white/25 tracking-[0.2em]">§ 02</span>
           <div className="flex-1 h-px bg-white/[0.06]" />
           <span className="font-mono text-xs text-white/20 tracking-[0.15em]">PROJECTS</span>
         </div>
 
-        {/* ── grid ── */}
+        {/* grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
           {PROJECTS.map((p, i) => {
             const st = STATUS_STYLE[p.status];
             return (
               <div
                 key={p.id}
-                className="group relative flex flex-col justify-between
-                           border border-white/[0.07] rounded-2xl p-6
-                           bg-white/[0.02] hover:bg-white/[0.04]
-                           hover:border-white/[0.15] transition-all duration-400"
+                className="group relative flex flex-col border border-white/[0.07] rounded-2xl p-6 bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.15] transition-all duration-400"
                 style={{
                   opacity:    fired ? 1 : 0,
                   transform:  fired ? 'none' : 'translateY(28px)',
-                  transition: `opacity 0.6s ease ${i * 0.1}s, transform 0.6s ease ${i * 0.1}s,
-                               background 0.3s, border-color 0.3s`,
+                  transition: `opacity 0.6s ease ${i * 0.1}s, transform 0.6s ease ${i * 0.1}s, background 0.3s, border-color 0.3s`,
                 }}
               >
                 {/* top row */}
@@ -118,10 +112,7 @@ export default function Projects() {
                   <span className="font-mono text-[11px] text-white/20 tracking-widest pt-0.5">
                     {p.id}
                   </span>
-                  <span
-                    className={`font-mono text-[10px] tracking-wider border rounded-full px-2.5 py-0.5
-                                ${st.color} ${st.border}`}
-                  >
+                  <span className={`font-mono text-[10px] tracking-wider border rounded-full px-2.5 py-0.5 ${st.color} ${st.border}`}>
                     {st.label}
                   </span>
                 </div>
@@ -144,35 +135,33 @@ export default function Projects() {
                 {/* metrics */}
                 <div className="grid grid-cols-2 gap-1.5 mb-5">
                   {p.metrics.map((m) => (
-                    <div
-                      key={m}
-                      className="flex items-center gap-2 text-[11px] text-white/40 font-mono"
-                    >
+                    <div key={m} className="flex items-center gap-2 text-[11px] text-white/40 font-mono">
                       <span className="text-white/15 shrink-0">›</span>
                       {m}
                     </div>
                   ))}
                 </div>
 
-                {/* stack tags + github link */}
-                <div className="flex flex-wrap items-center gap-1.5 pt-4 border-t border-white/[0.06]">
+                {/* stack tags */}
+                <div className="flex flex-wrap gap-1.5 pt-4 border-t border-white/[0.06]">
                   {p.stack.map((t) => (
-                    <span
-                      key={t}
-                      className="font-mono text-[10px] text-white/30 bg-white/[0.04]
-                                 border border-white/[0.06] px-2 py-0.5 rounded"
-                    >
+                    <span key={t} className="font-mono text-[10px] text-white/30 bg-white/[0.04] border border-white/[0.06] px-2 py-0.5 rounded">
                       {t}
                     </span>
                   ))}
+                </div>
+
+                {/* bottom row: role + github */}
+                <div className="flex items-center justify-between mt-3">
+                  <span className="font-mono text-[9px] text-white/15 tracking-widest uppercase">
+                    {p.role}
+                  </span>
                   {p.github && (
                     <a
                       href={p.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="ml-auto shrink-0 flex items-center gap-1 font-mono text-[10px]
-                                 text-white/30 hover:text-white/70 transition-colors duration-200
-                                 pointer-events-auto"
+                      className="flex items-center gap-1 font-mono text-[10px] text-white/30 hover:text-white/70 transition-colors duration-200 pointer-events-auto"
                       onClick={(e) => e.stopPropagation()}
                     >
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
@@ -182,14 +171,6 @@ export default function Projects() {
                     </a>
                   )}
                 </div>
-
-                {/* role badge bottom-right */}
-                <span
-                  className="absolute bottom-5 right-5 font-mono text-[9px]
-                             text-white/15 tracking-widest uppercase"
-                >
-                  {p.role}
-                </span>
               </div>
             );
           })}

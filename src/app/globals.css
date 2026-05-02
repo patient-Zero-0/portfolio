@@ -90,6 +90,26 @@ a, button, [role="button"] {
   -webkit-backdrop-filter: blur(28px);
 }
 
+/* ── Loading screen scanline ── */
+.loader-scan {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(180, 210, 255, 0.04) 50%,
+    transparent 100%
+  );
+  background-size: 100% 40%;
+  animation: loader-scan-move 1.4s linear infinite;
+}
+
+@keyframes loader-scan-move {
+  from { background-position: 0 -40%; }
+  to   { background-position: 0 140%; }
+}
+
 /* ── respect OS reduced-motion preference ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

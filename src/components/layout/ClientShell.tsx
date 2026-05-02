@@ -3,21 +3,28 @@
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 
+import LoadingScreen from '@/components/ui/LoadingScreen';
+
 const SplashCursor = dynamic(() => import('@/components/ui/SplashCursor'), { ssr: false });
 const CursorGlow   = dynamic(() => import('@/components/ui/CursorGlow'),   { ssr: false });
 const WaterRipple  = dynamic(() => import('@/components/ui/WaterRipple'),  { ssr: false });
 const CustomCursor = dynamic(() => import('@/components/ui/CustomCursor'), { ssr: false });
 
 export default function ClientShell({ children }: { children: React.ReactNode }) {
-  const [isPointer, setIsPointer] = useState(false);
+  const [enableEffects, setEnableEffects] = useState(false);
 
   useEffect(() => {
-    setIsPointer(window.matchMedia('(pointer: fine)').matches);
+    const pointer = window.matchMedia('(pointer: fine)').matches;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    setEnableEffects(pointer && !reduced);
   }, []);
 
   return (
     <>
-      {isPointer && (
+      {/* Cinematic intro — always shown, self-removes after ~1.2 s */}
+      <LoadingScreen />
+
+      {enableEffects && (
         <>
           {/* z:auto  — Navier-Stokes fluid trails, mix-blended via #fluid in CSS */}
           <SplashCursor

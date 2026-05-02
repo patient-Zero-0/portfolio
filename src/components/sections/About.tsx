@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useCountUp } from '@/hooks/useCountUp';
 
 /* ── spec rows ───────────────────────────────────────────────────────── */
 const SPEC = [
-  { key: 'SCHOOL', val: 'Jiaying University'          },
   { key: 'MAJOR',  val: 'Math & Applied Mathematics'  },
   { key: 'STAGE',  val: '1st Year Undergraduate'      },
   { key: 'STACK',  val: 'Python · Flask · Scrapy'     },
@@ -19,22 +19,6 @@ const MARQUEE = [
   '二次元', 'GAMING', 'FRONTIER AI',
 ];
 
-/* ── count-up hook ───────────────────────────────────────────────────── */
-function useCountUp(to: number, active: boolean, ms = 1300) {
-  const [n, setN] = useState(0);
-  useEffect(() => {
-    if (!active) return;
-    let start: number | null = null;
-    const tick = (ts: number) => {
-      if (!start) start = ts;
-      const ease = 1 - Math.pow(1 - Math.min((ts - start) / ms, 1), 3);
-      setN(Math.round(ease * to));
-      if (ease < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  }, [active, to, ms]);
-  return n;
-}
 
 /* ── component ───────────────────────────────────────────────────────── */
 export default function About() {
@@ -52,7 +36,7 @@ export default function About() {
     return () => obs.disconnect();
   }, []);
 
-  const fadeIn = (delay = 0): React.CSSProperties => ({
+  const fadeIn = (delay = 0): CSSProperties => ({
     opacity:    fired ? 1 : 0,
     transform:  fired ? 'none' : 'translateY(22px)',
     transition: `opacity 0.7s ease ${delay}s, transform 0.7s ease ${delay}s`,
@@ -94,7 +78,7 @@ export default function About() {
             {/* bio paragraphs */}
             <div className="space-y-4 text-[15px] leading-[1.85] text-white/50 max-w-lg">
               <p>
-                A Math & Applied Mathematics student at Jiaying University who fell
+                A Math & Applied Mathematics student who fell
                 into Python and never looked back. In one year: shipped scraping
                 pipelines processing 1,000+ records daily, built data-analysis
                 dashboards with Pandas & Matplotlib, and wrote this site from raw
@@ -197,9 +181,7 @@ export default function About() {
               ].map(({ n, suffix, label, delay }) => (
                 <div
                   key={label}
-                  className="rounded-xl border border-white/[0.07] bg-white/[0.02]
-                             hover:bg-white/[0.05] hover:border-white/[0.14]
-                             transition-all duration-300 p-5 flex flex-col gap-3"
+                  className="rounded-xl border border-white/[0.07] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/[0.14] transition-all duration-300 p-5 flex flex-col gap-3"
                   style={fadeIn(delay)}
                 >
                   <span className="text-4xl font-bold text-white leading-none tracking-tight">
@@ -223,7 +205,7 @@ export default function About() {
           style={{ animation: 'marquee-scroll 30s linear infinite' }}
         >
           {[...MARQUEE, ...MARQUEE].map((item, i) => (
-            <span key={i} className="inline-flex items-center gap-4 px-4">
+            <span key={`${item}-${i}`} className="inline-flex items-center gap-4 px-4">
               <span className="font-mono text-[11px] tracking-[0.2em] text-white/25 hover:text-white/50 transition-colors duration-200">
                 {item}
               </span>
