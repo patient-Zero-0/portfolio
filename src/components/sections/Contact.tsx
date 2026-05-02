@@ -4,10 +4,33 @@ import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
 import { CONTACT_EMAIL, CONTACT_QQ, GITHUB_HANDLE, GITHUB_URL } from '@/lib/contact';
 
+const MAIL_OPTIONS = [
+  {
+    label: 'QQ Mail',
+    hint:  'mail.qq.com',
+    url:   `https://mail.qq.com/cgi-bin/compose_mail?to=${CONTACT_EMAIL}`,
+  },
+  {
+    label: 'Gmail',
+    hint:  'mail.google.com',
+    url:   `https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT_EMAIL}`,
+  },
+];
+
 export default function Contact() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [fired, setFired] = useState(false);
+  const sectionRef  = useRef<HTMLElement>(null);
+  const mailRef     = useRef<HTMLDivElement>(null);
+  const [fired,     setFired]     = useState(false);
+  const [mailOpen,  setMailOpen]  = useState(false);
   const { copied, copy: copyEmail } = useCopyToClipboard(CONTACT_EMAIL);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (mailRef.current && !mailRef.current.contains(e.target as Node)) setMailOpen(false);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -78,12 +101,36 @@ export default function Contact() {
               {CONTACT_EMAIL}
             </a>
             <div className="flex flex-wrap gap-2.5 mt-auto">
-              <a
-                href={`mailto:${CONTACT_EMAIL}`}
-                className="font-mono text-[10px] text-white/40 border border-white/[0.10] rounded-full px-4 py-1.5 hover:border-white/30 hover:text-white/70 transition-all duration-200 tracking-wider"
-              >
-                OPEN MAIL CLIENT
-              </a>
+              {/* Mail picker */}
+              <div ref={mailRef} className="relative">
+                <button
+                  onClick={() => setMailOpen((v) => !v)}
+                  className={`font-mono text-[10px] border rounded-full px-4 py-1.5 transition-all duration-200 tracking-wider ${mailOpen ? 'border-white/30 text-white/70' : 'border-white/[0.10] text-white/40 hover:border-white/30 hover:text-white/70'}`}
+                >
+                  OPEN MAIL CLIENT ▾
+                </button>
+
+                {mailOpen && (
+                  <div className="absolute left-0 top-full mt-2 w-52 border border-white/[0.09] rounded-xl bg-[#0d0d0d]/95 backdrop-blur-xl shadow-[0_16px_40px_rgba(0,0,0,0.5)] overflow-hidden z-50">
+                    {MAIL_OPTIONS.map(({ label, hint, url }) => (
+                      <a
+                        key={label}
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setMailOpen(false)}
+                        className="flex items-center justify-between px-4 py-3 hover:bg-white/[0.04] transition-colors duration-150 group"
+                      >
+                        <div>
+                          <p className="font-mono text-[11px] text-white/65 group-hover:text-white/90 transition-colors">{label}</p>
+                          <p className="font-mono text-[9px] text-white/22 mt-0.5">{hint}</p>
+                        </div>
+                        <span className="text-white/18 group-hover:text-white/50 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-xs">↗</span>
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
               <button
                 onClick={copyEmail}
                 className={`font-mono text-[10px] border rounded-full px-4 py-1.5 tracking-wider transition-all duration-300 ${copied ? 'text-emerald-400/80 border-emerald-400/30 bg-emerald-400/[0.07]' : 'text-white/40 border-white/[0.10] hover:border-white/30 hover:text-white/70'}`}
