@@ -74,7 +74,7 @@ export default function Image() {
           color: 'rgba(255,255,255,0.18)', fontSize: 14, fontFamily: 'monospace',
           display: 'flex',
         }}>
-          portfolio-nine-zeta-33.vercel.app
+          portfolio-ddw.pages.dev
         </div>
       </div>
     ),

@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
-const SITE_URL = 'https://portfolio-nine-zeta-33.vercel.app';
+const SITE_URL = 'https://portfolio-ddw.pages.dev';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

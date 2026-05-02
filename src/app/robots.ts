@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 
 export const dynamic = 'force-static';
 
-const SITE_URL = 'https://portfolio-nine-zeta-33.vercel.app';
+const SITE_URL = 'https://portfolio-ddw.pages.dev';
 
 export default function robots(): MetadataRoute.Robots {
   return {
