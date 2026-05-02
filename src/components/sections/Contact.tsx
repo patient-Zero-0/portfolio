@@ -8,12 +8,12 @@ const MAIL_OPTIONS = [
   {
     label: 'QQ Mail',
     hint:  'mail.qq.com',
-    url:   `https://mail.qq.com/cgi-bin/compose_mail?to=${CONTACT_EMAIL}`,
+    url:   'https://mail.qq.com/',
   },
   {
     label: 'Gmail',
     hint:  'mail.google.com',
-    url:   `https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT_EMAIL}`,
+    url:   'https://mail.google.com/mail/u/0/',
   },
 ];
 

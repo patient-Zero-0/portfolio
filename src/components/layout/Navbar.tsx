@@ -95,7 +95,7 @@ export default function Navbar() {
                     <p className="text-[13px] font-mono text-white/75 mb-3 truncate">{CONTACT_EMAIL}</p>
                     <div className="flex gap-2">
                       <a
-                        href={`https://mail.qq.com/cgi-bin/compose_mail?to=${CONTACT_EMAIL}`}
+                        href="https://mail.qq.com/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="font-mono text-[10px] text-white/40 border border-white/[0.08] rounded-full px-3 py-1 hover:text-white/70 hover:border-white/25 transition-all"
@@ -103,7 +103,7 @@ export default function Navbar() {
                         QQ MAIL
                       </a>
                       <a
-                        href={`https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT_EMAIL}`}
+                        href="https://mail.google.com/mail/u/0/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="font-mono text-[10px] text-white/40 border border-white/[0.08] rounded-full px-3 py-1 hover:text-white/70 hover:border-white/25 transition-all"
